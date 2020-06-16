@@ -7,7 +7,8 @@ Guarda o banco e roda o backend.
 Antigamente, todos os assuntos ligados ao servidor (manutenção, segurança, etc) eram responsabilidade do dono,
 por isso surgiu a hospadagem compartilhada (Godaddy, Hostgator, entre outras)
 
-A nuvem: maquinas virtuais q servem de servidor para grandes empresas, tão grandes quanto forem necessárias para a empresa.
+A nuvem: maquinas virtuais q servem de servidor para grandes empresas, tão grandes quanto forem necessárias para 
+a empresa.
 
 Servidores são tão caros quanto carros, não vale a pena ter um em casa. É mais fácil subir pra nuvem.
 
@@ -44,3 +45,36 @@ DB_DIALECT=
 inclui o .env no .gitignore
 
 isso é o mínimo (junto com apaga os console.log() e outros testes)
+-------------------------------------------------------------------
+para subir o projeto:
+é preciso logar no heroku-cli
+no terminal: heroku login
+
+o heroku cai criar um container pro projeto:
+
+no terminal: heroku create --app=nomedoprojeto
+ele cria um domínio.heroku e um novo origin no git pra subir alterações pra produção vc só usa 
+"git push heroku master"
+
+só falta o banco de dados. O banco padrão do heroku é postgres (tem sql tbm, não é pago mas precisa 
+cadastrar cartão de crédito)
+no terminal: heroku addons:create heroku-postgresql:nomedobanco
+
+ele cria um env DATABASE_URL com as info do banco
+
+para acessá-la: heroku config | grep DATABASE_URL
+vem no formato: postgres:// nomedeusuario:senha@host:porta
+
+pra recongigurar:
+
+heruko config:set DB_USER=nomedeusuario ... o mesmo pros outros (DATABASE = HOST, precisa dos dois)(DIALECT = postgres)
+
+depois precisa intalar o pacote do postgres no projeto: npm install --save pg pg-hstore
+ 
+depois de instalado, commita (git push heroku master)
+
+para rodar as migrations: heroku run npx sequelize db:migrate
+
+em um projeto sem migrations, vc conecta diretamente pelo programa de fazer bancos (tipo o workbench, e similares),
+e sobe direto
+
