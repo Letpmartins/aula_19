@@ -63,18 +63,22 @@ no terminal: heroku addons:create heroku-postgresql:nomedobanco
 ele cria um env DATABASE_URL com as info do banco
 
 para acessá-la: heroku config | grep DATABASE_URL
-vem no formato: postgres:// nomedeusuario:senha@host:porta
+vem no formato: postgres:// nomedeusuario:senha@host:porta/database
 
 pra recongigurar:
 
-heruko config:set DB_USER=nomedeusuario ... o mesmo pros outros (DATABASE = HOST, precisa dos dois)(DIALECT = postgres)
+heruko config:set DB_USER=nomedeusuario ... o mesmo pros outros (DIALECT = postgres) 
+(se precisar atualizar, é só rodar o mesmo comando de novo,  heroku sobrescreve)
 
 depois precisa intalar o pacote do postgres no projeto: npm install --save pg pg-hstore
  
 depois de instalado, commita (git push heroku master)
 
-para rodar as migrations: heroku run npx sequelize db:migrate
+para rodar as migrations: heroku run npx sequelize db:migrate (se o sequelize não rodar, vai no package.json, 
+tira o sequelize do dev-dependecies e junta com as outras, precisa commitar denovo depois)
+commita outra vez
 
 em um projeto sem migrations, vc conecta diretamente pelo programa de fazer bancos (tipo o workbench, e similares),
-e sobe direto
+e sobe direto (lembrando que tem q fazer o banco no postgres)
 
+se a aplicação der problema no ambiente de produção: heroku logs --tail, mostra os erros
