@@ -1,0 +1,46 @@
+Aula de Deploy
+
+Servidor: 
+Computador baseado em desenpenho onde se guardam as aplicações para fornecê-las ao cliente. 
+Guarda o banco e roda o backend.
+
+Antigamente, todos os assuntos ligados ao servidor (manutenção, segurança, etc) eram responsabilidade do dono,
+por isso surgiu a hospadagem compartilhada (Godaddy, Hostgator, entre outras)
+
+A nuvem: maquinas virtuais q servem de servidor para grandes empresas, tão grandes quanto forem necessárias para a empresa.
+
+Servidores são tão caros quanto carros, não vale a pena ter um em casa. É mais fácil subir pra nuvem.
+
+Heroku: serviço gratuito (em partes) de servidor em nuvem. Bom para testes e aplicações menores.
+coisas necessárias para usar-lo:
+Heroku-cli: npm install -g heroku
+pm2: npm install -g pm2
+
+o projeto q vc for subir precisa de algumas mofificações de segurança:
+no terminal do projeto: npm install dotenv
+
+cria os arquivos: .env e .env.example
+
+no .env:
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASS= 
+DB_DATABASE=fake-instagram
+DB_DIALECT=mysql
+
+aí no database.js vc substitui a informação:
+require("dotenv").config();
+host: process.env.DB_HOST, e por aí vai
+
+no .env.example:
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASS= 
+DB_DATABASE=
+DB_DIALECT=
+
+inclui o .env no .gitignore
+
+isso é o mínimo (junto com apaga os console.log() e outros testes)
